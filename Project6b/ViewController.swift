@@ -46,28 +46,47 @@ class ViewController: UIViewController {
         view.addSubview(label4)
         view.addSubview(label5)
         
-        // create a views dictionary
-        let viewsDictionary = [
-            "label1": label1,
-            "label2": label2,
-            "label3": label3,
-            "label4": label4,
-            "label5": label5
-        ]
+//        // create a views dictionary
+//        let viewsDictionary = [
+//            "label1": label1,
+//            "label2": label2,
+//            "label3": label3,
+//            "label4": label4,
+//            "label5": label5
+//        ]
+//
+//        for label in viewsDictionary.keys {
+//            // add an array of constraints to our view controller's view
+//            // this sets the horizontal constraint for each of our labels so that it stretches edge to edge in our view
+//            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[\(label)]|",
+//                                                               options: [],
+//                                                               metrics: nil,
+//                                                               views: viewsDictionary))
+//        }
+//
+//        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[label1]-[label2]-[label3]-[label4]-[label5]",
+//                                                          options: [],
+//                                                          metrics: nil,
+//                                                          views: viewsDictionary))
+        // create a variable to hold the previous label
+        // it's optional because the first label won't have a previous
+        var previous: UILabel!
         
-        for label in viewsDictionary.keys {
-            // add an array of constraints to our view controller's view
-            // this sets the horizontal constraint for each of our labels so that it stretches edge to edge in our view
-            view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[\(label)]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: viewsDictionary))
+        for label in [label1, label2, label3, label4, label5] {
+            // set the label to stretch across the view
+            label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+            // set each label's height to equal 88
+            label.heightAnchor.constraint(equalToConstant: 88).isActive = true
+            
+            // if there is a previous label...
+            if previous != nil {
+                // we have a previous label - create a top anchor constraint
+                label.topAnchor.constraint(equalTo: previous.bottomAnchor).isActive = true
+            }
+            
+            // set the previous label to be the current one, for the next loop iteration
+            previous = label
         }
-        
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[label1]-[label2]-[label3]-[label4]-[label5]",
-                                                          options: [],
-                                                          metrics: nil,
-                                                          views: viewsDictionary))
         
     }
 
